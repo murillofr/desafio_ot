@@ -2,6 +2,8 @@ package com.murillofr.desafio_ot.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.murillofr.desafio_ot.domain.Cliente;
+import com.murillofr.desafio_ot.dto.ClienteDTO;
 import com.murillofr.desafio_ot.services.ClienteService;
 
 @RestController
@@ -28,7 +31,8 @@ public class ClienteResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Cliente obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto) {
+		Cliente obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
