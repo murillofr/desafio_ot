@@ -7,5 +7,7 @@ import com.murillofr.desafio_ot.domain.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
-
+	
+	
+	
 }
